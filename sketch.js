@@ -13,8 +13,8 @@ const model = tf.sequential();
 // dense is a "full connected layer"
 const hidden = tf.layers.dense({
   units: 4, // number of nodes
-  inputShape: [2], // input shape
-  activation: 'sigmoid'
+  inputShape: [1], // input shape
+  activation: 'linear'
 });
 // Add the layer
 model.add(hidden);
@@ -23,41 +23,48 @@ model.add(hidden);
 const output = tf.layers.dense({
   units: 1,
   // here the input shape is "inferred from the previous layer"
-  activation: 'sigmoid'
+//  activation: 'sigmoid'
+  activation: 'linear'
 });
 model.add(output);
 
 // An optimizer using gradient descent
-const sgdOpt = tf.train.sgd(0.1);
+//const Opt = tf.train.sgd(0.1);
+const Opt = tf.train.sgd(0.1);
 
 // I'm done configuring the model so compile it
 model.compile({
-  optimizer: sgdOpt,
+
+  optimizer: Opt,
   loss: tf.losses.meanSquaredError
+	//  loss: tf.losses.absoluteDifference
+	//  loss: tf.losses.hingeLoss
+	//  loss: tf.losses.logLoss
+
 });
 
 
 const xs = tf.tensor2d([
-  [0, 0],
-  [0.5, 0.5],
-  [1, 1],
-  [0.2, 0.2]
+  [0],
+//  [0.5],
+//  [1],
+  [0.2]
 ]);
 
 const ys = tf.tensor2d([
   [1],
-  [0.5],
-  [0],
+//  [0.5],
+//  [0],
   [0.8]
 ]);
 
 const zs = tf.tensor2d([
-  [0.2, 0.2],
-  [0.4, 0.4],
-  [0.7, 0.7],
-  [0.99, 0.99],
-  [1.99, 1.99],
-  [0.0, 0.0]
+  [0.2],
+  [0.4],
+  [0.7],
+  [0.99],
+  [1.99],
+  [0.0]
 ]);
 
 //var loadedModel;
@@ -78,10 +85,10 @@ async function train() {
 
 //  console.log('Prediction from loaded model:');
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 50; i++) {
     const config = {
       shuffle: true,
-      epochs: 30
+      epochs: 100
     }
     const response = await model.fit(xs, ys, config);
     console.log(response.history.loss[0]);
