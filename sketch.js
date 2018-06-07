@@ -81,9 +81,10 @@ train().then(() => {
 async function train() {
   // List models again.
   console.log(await tf.io.listModels());
-//  const loadedModel = await tf.loadModel('localstorage://my-model-1');
+  const loadedModel = await tf.loadModel('localstorage://my-model-1');
 
-//  console.log('Prediction from loaded model:');
+  console.log('Prediction from loaded model:');
+  console.log(loadedModel);
 
   for (let i = 0; i < 50; i++) {
     const config = {
