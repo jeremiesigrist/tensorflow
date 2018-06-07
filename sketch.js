@@ -60,12 +60,13 @@ const zs = tf.tensor2d([
   [0.0, 0.0]
 ]);
 
-var loadedModel;
+//var loadedModel;
 
 
 train().then(() => {
 
-  let outputs = loadedModel.predict(zs);
+//  let outputs = loadedModel.predict(zs);
+  let outputs = model.predict(zs);
   outputs.print();
   console.log('training complete');
 });
@@ -73,19 +74,19 @@ train().then(() => {
 async function train() {
   // List models again.
   console.log(await tf.io.listModels());
-  const loadedModel = await tf.loadModel('localstorage://my-model-1');
+//  const loadedModel = await tf.loadModel('localstorage://my-model-1');
 
-  console.log('Prediction from loaded model:');
+//  console.log('Prediction from loaded model:');
 
   for (let i = 0; i < 100; i++) {
     const config = {
       shuffle: true,
       epochs: 30
     }
-    const response = await loadedModel.fit(xs, ys, config);
+    const response = await model.fit(xs, ys, config);
     console.log(response.history.loss[0]);
   }
-  const saveResults = await loadedModel.save('localstorage://my-model-1');
+  const saveResults = await model.save('localstorage://my-model-1');
 
 }
 
