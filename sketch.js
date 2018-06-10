@@ -13,11 +13,10 @@ const model = tf.sequential();
 // dense is a "full connected layer"
 const hidden = tf.layers.dense({
   units: 4, // number of nodes
-<<<<<<< HEAD
-  inputShape: [2], // input shape
-  activation: 'sigmoid'
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
+
+//  inputShape: [2], // input shape
+//  activation: 'sigmoid'
+
   inputShape: [1], // input shape
   activation: 'linear'
 });
@@ -28,30 +27,17 @@ model.add(hidden);
 const output = tf.layers.dense({
   units: 1,
   // here the input shape is "inferred from the previous layer"
-<<<<<<< HEAD
-  activation: 'sigmoid'
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
 //  activation: 'sigmoid'
   activation: 'linear'
 });
 model.add(output);
 
 // An optimizer using gradient descent
-<<<<<<< HEAD
-const sgdOpt = tf.train.sgd(0.1);
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
 //const Opt = tf.train.sgd(0.1);
 const Opt = tf.train.sgd(0.1);
 
 // I'm done configuring the model so compile it
 model.compile({
-<<<<<<< HEAD
-  optimizer: sgdOpt,
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-
   optimizer: Opt,
   loss: tf.losses.meanSquaredError
 	//  loss: tf.losses.absoluteDifference
@@ -62,87 +48,30 @@ model.compile({
 
 
 const xs = tf.tensor2d([
-<<<<<<< HEAD
-  [0, 0],
-  [0.5, 0.5],
-  [1, 1],
-  [0.2, 0.2]
-  [1, 0],
-  [0, 1],
-  [1, 1]
-=======
-  [0],
-//  [0.5],
-//  [1],
-  [0.2]
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-]);
 
-const ys = tf.tensor2d([
   [0],
-  [1],
-<<<<<<< HEAD
   [0.5],
   [1],
-  [0]
-]);
-
-const zs = tf.tensor2d([
-  [0, 0],
-  [1, 0],
-  [0, 1],
-  [1, 1]
-=======
-  [0],
-//  [0.5],
-//  [1],
   [0.2]
 ]);
 
 const ys = tf.tensor2d([
+  [0],
+  [0.5],
   [1],
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-//  [0.5],
-//  [0],
   [0.8]
 ]);
 
 const zs = tf.tensor2d([
-<<<<<<< HEAD
-  [0.2, 0.2],
-  [0.4, 0.4],
-  [0.7, 0.7],
-  [0.99, 0.99],
-  [1.99, 1.99],
-  [0.0, 0.0]
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-  [0.2],
-  [0.4],
-  [0.7],
-  [0.99],
-  [1.99],
-  [0.0]
-<<<<<<< HEAD
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
+  [0],
+[0.5],
+[1],
+  [0.2]
 ]);
-
-var loadedModel;
-=======
-]);
-
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-//var loadedModel;
 
 
 train().then(() => {
 
-<<<<<<< HEAD
-  let outputs = loadedModel.predict(zs);
-=======
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
-//  let outputs = loadedModel.predict(zs);
   let outputs = model.predict(zs);
   outputs.print();
   console.log('training complete');
@@ -151,25 +80,11 @@ train().then(() => {
 async function train() {
   // List models again.
   console.log(await tf.io.listModels());
-  const loadedModel = await tf.loadModel('localstorage://my-model-1');
+//  const loadedModel = await tf.loadModel('localstorage://my-model-1');
 
   console.log('Prediction from loaded model:');
   console.log(loadedModel);
 
-<<<<<<< HEAD
-  for (let i = 0; i < 100; i++) {
-  for (let i = 0; i < 50; i++) {
-    const config = {
-      shuffle: true,
-      epochs: 30
-      epochs: 100
-    }
-    const response = await loadedModel.fit(xs, ys, config);
-    const response = await model.fit(xs, ys, config);
-    console.log(response.history.loss[0]);
-  }
-  const saveResults = await loadedModel.save('localstorage://my-model-1');
-=======
   for (let i = 0; i < 50; i++) {
     const config = {
       shuffle: true,
@@ -178,7 +93,7 @@ async function train() {
     const response = await model.fit(xs, ys, config);
     console.log(response.history.loss[0]);
   }
->>>>>>> c8e330ae9874c23b9deb1944871793395d324d74
+
   const saveResults = await model.save('localstorage://my-model-1');
 
 }
