@@ -1,9 +1,7 @@
 // Daniel Shiffman
 // http://codingtra.in
 
-// TensorFlow.js Layers API
-// Part 1: https://youtu.be/F4WWukTWoXY
-// Part 2: https://youtu.be/iUiOx2fBx18
+
 // https://js.tensorflow.org/api/0.11.2/
 
 // This is the model
@@ -13,12 +11,8 @@ const model = tf.sequential();
 // dense is a "full connected layer"
 const hidden = tf.layers.dense({
   units: 4, // number of nodes
-
-//  inputShape: [2], // input shape
-//  activation: 'sigmoid'
-
   inputShape: [2], // input shape
-  activation: 'linear'
+  activation: 'sigmoid'
 });
 // Add the layer
 model.add(hidden);
@@ -26,9 +20,7 @@ model.add(hidden);
 // Creat another layer
 const output = tf.layers.dense({
   units: 1,
-  // here the input shape is "inferred from the previous layer"
-//  activation: 'sigmoid'
-  activation: 'linear'
+  activation: 'sigmoid'
 });
 model.add(output);
 
@@ -64,8 +56,8 @@ const ys = tf.tensor2d([
 
 const zs = tf.tensor2d([
   [0,1],
-[0,0],
-[0.5,0.5],
+  [0,0],
+  [0.5,0.5],
   [1,1]
 ]);
 
@@ -85,7 +77,7 @@ async function train() {
 //  console.log('Prediction from loaded model:');
 //  console.log(loadedModel);
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 500; i++) {
     const config = {
       shuffle: true,
       epochs: 100
