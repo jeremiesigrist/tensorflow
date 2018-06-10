@@ -17,7 +17,7 @@ const hidden = tf.layers.dense({
 //  inputShape: [2], // input shape
 //  activation: 'sigmoid'
 
-  inputShape: [1], // input shape
+  inputShape: [2], // input shape
   activation: 'linear'
 });
 // Add the layer
@@ -49,24 +49,24 @@ model.compile({
 
 const xs = tf.tensor2d([
 
-  [0],
-  [0.5],
-  [1],
-  [0.2]
+  [0,0],
+  [0,1],
+  [1,0],
+  [1,1]
 ]);
 
 const ys = tf.tensor2d([
   [0],
-  [0.5],
   [1],
-  [0.8]
+  [1],
+  [0]
 ]);
 
 const zs = tf.tensor2d([
-  [0],
-[0.5],
-[1],
-  [0.2]
+  [0,1],
+[0,0],
+[0.5,0.5],
+  [1,1]
 ]);
 
 
@@ -82,8 +82,8 @@ async function train() {
   console.log(await tf.io.listModels());
 //  const loadedModel = await tf.loadModel('localstorage://my-model-1');
 
-  console.log('Prediction from loaded model:');
-  console.log(loadedModel);
+//  console.log('Prediction from loaded model:');
+//  console.log(loadedModel);
 
   for (let i = 0; i < 50; i++) {
     const config = {
@@ -94,7 +94,7 @@ async function train() {
     console.log(response.history.loss[0]);
   }
 
-  const saveResults = await model.save('localstorage://my-model-1');
+  const saveResults = await model.save('localstorage://my-model-XOR');
 
 }
 
