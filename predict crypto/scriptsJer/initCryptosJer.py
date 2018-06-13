@@ -42,10 +42,10 @@ testX = np.reshape(testX, (testX.shape[0], 1, testX.shape[1]))
 model = Sequential()
 model.add(LSTM(4, input_shape=(1, 1)))
 model.add(Dense(1))
-model.compile(loss='mean_squared_error', optimizer='adam')
-model.fit(trainX, trainY, epochs=100, batch_size=2, verbose=2)
+model.compile(loss='logcosh', optimizer='adadelta')
+#model.fit(trainX, trainY, epochs=100, batch_size=2, verbose=2)
 #save model for later use
-model.save('./savedModel')
+#model.save('./savedModel')
 #load_model
 model = load_model('./savedModel')
 # make predictions
@@ -58,6 +58,27 @@ trainPredict = scaler.inverse_transform(trainPredict)
 trainY = scaler.inverse_transform(trainY)
 testPredict = scaler.inverse_transform(testPredict)
 testY = scaler.inverse_transform(testY)
+print("Jer debut")
+print(scaler.inverse_transform(testX[-1]))
+print(scaler.inverse_transform(testX[-2]))
+print(scaler.inverse_transform(testX[-3]))
+print(scaler.inverse_transform(testX[-4]))
+print(scaler.inverse_transform(testX[-5]))
+
+for i in range(1,len(testPredict)):
+    if testX[-i] < testX[-i-1]: res = "A"
+    else: res = "B"
+    if testPredict[-i] < testPredict[-i-1]: res2 = "A"
+    else: res2 = "B"
+    if res == res2:
+        if res == "A": print(" en BAISSE (" + repr(i) + ") " + repr(scaler.inverse_transform(testX[-i])) + "  " + repr(testPredict[-i]) )
+        else: print(" en HAUSSE (" + repr(i) + ") " + repr(scaler.inverse_transform(testX[-i])) + "  " + repr(testPredict[-i]) )
+    else: print(" en décalage")
+
+
+
+print("Jer fin")
+
 print("Price for last 5 days: ")
 print(testPredict[-5:])
 print("Bitcoin price for tomorrow: ", futurePredict)
@@ -78,4 +99,4 @@ testPredictPlot[len(trainPredict):len(dataset)-1, :] = testPredict
 plt.plot(scaler.inverse_transform(dataset))
 plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
-plt.show()
+#plt.show()
