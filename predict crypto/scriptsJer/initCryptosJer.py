@@ -4,6 +4,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import read_csv
+from pandas import read_json
+
+
 from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.layers import LSTM
@@ -22,11 +25,21 @@ def create_dataset(dataset):
   return np.asarray(dataX), np.asarray(dataY)
 # fix random seed for reproducibility
 np.random.seed(7)
-# load the dataset
+
+# load the dataset from CSV
 df = read_csv('../data/bitcoin.csv')
 df = df.iloc[::-1]
 df = df.drop(['Date','Open','High','Low','Volume','MarketCap'], axis=1)
 dataset = df.values
+
+# load the dataset from JSON
+df2 = read_json('https://api.bitfinex.com/v2/candles/trade:1h:tBTCUSD/hist')
+#df2 = df.iloc[::-1]
+#df2 = df.drop(['Date','Open','High','Low','Volume','MarketCap'], axis=1)
+#dataset = df2.values
+
+
+
 dataset = dataset.astype('float32')
 # normalize the dataset
 scaler = MinMaxScaler(feature_range=(0, 1))
